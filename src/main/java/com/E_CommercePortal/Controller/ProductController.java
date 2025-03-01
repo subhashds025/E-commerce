@@ -21,4 +21,10 @@ public class ProductController {
         Product saved = productServiceIMPL.addProduct(product, categoryId);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<Product> getProduct(@RequestParam int id){
+        Product product = productServiceIMPL.getPoduct(id);
+        return new ResponseEntity<>(product,HttpStatus.OK);
+    }
 }

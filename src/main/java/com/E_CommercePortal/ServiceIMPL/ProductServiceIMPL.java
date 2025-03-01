@@ -31,4 +31,16 @@ public class ProductServiceIMPL implements ProductService{
         }
         return productRepository.save(product);
     }
+
+    @Override
+    public Product getPoduct(int id) {
+        Optional<Product> opProduct = productRepository.findById(id);
+        if (opProduct.isPresent()) {
+            Product product = opProduct.get();
+            return product;
+        } else {
+            throw new RuntimeException("product not found");
+
+        }
+    }
 }
