@@ -31,4 +31,15 @@ public class UsersServiceIMPL implements UserService {
 
 
     }
+
+    @Override
+    public Users getUser(int userId) {
+        Optional<Users> opUser = usersRepository.findById(userId);
+   if(opUser.isPresent()){
+       Users users = opUser.get();
+       return users;
+   }else{
+       throw new RuntimeException("user with this id not found");
+   }
+    }
 }
