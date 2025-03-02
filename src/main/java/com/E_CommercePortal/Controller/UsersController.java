@@ -1,14 +1,12 @@
 package com.E_CommercePortal.Controller;
 
 import com.E_CommercePortal.Entity.Users;
+import com.E_CommercePortal.Payload.UserDto;
 import com.E_CommercePortal.ServiceIMPL.UsersServiceIMPL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -22,4 +20,17 @@ public class UsersController {
         Users saved = usersServiceIMPL.addUsers(users);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<Users> getUser(@RequestParam int userId){
+        Users user = usersServiceIMPL.getUser(userId);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Users> updateUser(@RequestBody UserDto dto,@RequestParam int userId){
+        Users updated = usersServiceIMPL.updateUser(dto, userId);
+        return new ResponseEntity<>(updated,HttpStatus.OK);
+    }
+
 }

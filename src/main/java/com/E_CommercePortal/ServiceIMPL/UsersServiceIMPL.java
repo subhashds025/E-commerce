@@ -2,6 +2,7 @@ package com.E_CommercePortal.ServiceIMPL;
 
 import com.E_CommercePortal.Entity.User_Role;
 import com.E_CommercePortal.Entity.Users;
+import com.E_CommercePortal.Payload.UserDto;
 import com.E_CommercePortal.Repository.UsersRepository;
 import com.E_CommercePortal.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,33 @@ public class UsersServiceIMPL implements UserService {
 
 
 
+    }
+
+    @Override
+    public Users getUser(int userId) {
+        Optional<Users> opUser = usersRepository.findById(userId);
+   if(opUser.isPresent()){
+       Users users = opUser.get();
+       return users;
+   }else{
+       throw new RuntimeException("user with this id not found");
+   }
+    }
+
+    @Override
+    public Users updateUser(UserDto dto, int userId) {
+        Optional<Users> opUser = usersRepository.findById(userId);
+        if(opUser.isPresent()){
+            Users users = opUser.get();
+            users.setPassword(dto.getPassword());
+            users.setEmail(dto.getEmail());
+            users.setMobile(dto.getMobile());
+            users.setFirstName(dto.getFirstName());
+            users.setLastName(dto.getLastName());
+            Users saved = usersRepository.save(users);
+            return saved;
+        }else{
+            throw new RuntimeException("user not found");
+        }
     }
 }
